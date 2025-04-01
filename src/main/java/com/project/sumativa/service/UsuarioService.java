@@ -12,7 +12,7 @@ public class UsuarioService {
     
     private List<Usuario> usuarios = new ArrayList<>();
 
-    public UsuarioService() {        
+    public UsuarioService() {
         usuarios.add(new Usuario(1L, "Hernesto Jaramillo Gonzalez", "1993-02-26", "hernestitojargon@hotmail.com", "Conductor Pet-Friendly"));
         usuarios.add(new Usuario(2L, "Jaime Zamorano Jara",         "1982-09-16", "dogloverjaime@gmail.com", "Conductor Pet-Friendly"));
         usuarios.add(new Usuario(3L, "Miguel Heinz Matta",          "1990-12-07", "heinzking99@gmail.com", "Conductor Standard"));

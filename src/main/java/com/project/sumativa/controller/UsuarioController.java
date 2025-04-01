@@ -1,10 +1,10 @@
 package com.project.sumativa.controller;
 
+import com.project.sumativa.exception.UsuarioNotFound;
 import com.project.sumativa.model.Usuario;
 import com.project.sumativa.service.UsuarioService;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +28,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Usuario> getUsuarioById(@PathVariable Long id) {
-        return usuarioService.getUsuarioById(id);
-            //.orElseThrow(() -> new UsuarioNotFound(id));
+    public Usuario getUsuarioById(@PathVariable Long id) {
+        return usuarioService.getUsuarioById(id).orElseThrow(() -> new UsuarioNotFound(id));
     }
 
 }
