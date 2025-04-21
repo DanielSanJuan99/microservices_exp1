@@ -3,18 +3,14 @@ package com.project.sumativa.controller;
 import com.project.sumativa.model.Usuario;
 import com.project.sumativa.service.UsuarioService;
 import com.project.sumativa.model.ResponseWrapper;
-
 // import com.project.sumativa.exception.UsuarioNotFound;
 
 import java.util.List;
-// import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.*;
-
-
 
 @RestController
 @RequestMapping("/usuarios")
@@ -46,15 +42,4 @@ public class UsuarioController {
     public Usuario getUsuarioById(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id);
     }
-
-    // @GetMapping
-    // public List<Usuario> getAllUsuarios() {
-    //     return usuarioService.getAllUsuarios();
-    // }
-
-    // @GetMapping("/{id}")
-    // public Usuario getUsuarioById(@PathVariable Long id) {
-    //     return usuarioService.getUsuarioById(id).orElseThrow(() -> new UsuarioNotFound(id));
-    // }
-
 }
