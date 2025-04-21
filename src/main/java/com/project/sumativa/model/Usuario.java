@@ -24,7 +24,7 @@ public class Usuario {
     private Long id;
 
     @NotBlank(message = "Nombre no puede estar vacío")
-    @Size(min = 3, max = 20, message = "Nombre debe tener entre 3 y 50 caracteres")
+    @Size(min = 3, max = 100, message = "Nombre debe tener entre 3 y 50 caracteres")
     private String nombre;
 
     @NotBlank(message = "Fecha de nacimiento no puede ir vacío")
