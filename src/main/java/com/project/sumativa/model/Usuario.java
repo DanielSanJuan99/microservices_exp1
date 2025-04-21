@@ -33,9 +33,10 @@ public class Usuario {
 
     @NotBlank(message = "Correo no puede estar vacío")
     @Email(message = "Correo no es válido")
+    @Size(min = 15, max = 150, message = "Correo debe tener entre 15 y 150 caracteres")
     private String email;
 
-    @NotBlank(message = "Contraseña no puede estar vacío")
-    @Size(min = 13, max = 20, message = "Rol debe tener entre 8 y 20 caracteres")
+    @NotBlank(message = "Rol no puede estar vacío")
+    @Size(min = 8, max = 30, message = "Rol debe tener entre 8 y 30 caracteres")
     private String rol;
 }
