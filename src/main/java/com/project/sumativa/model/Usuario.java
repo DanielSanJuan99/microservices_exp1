@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -29,7 +31,7 @@ public class Usuario {
 
     @NotBlank(message = "Fecha de nacimiento no puede ir vacío")
     @Past(message = "Fecha de nacimiento debe ser una fecha pasada")
-    private String fhaNacimiento;
+    private LocalDate fhaNacimiento;
 
     @NotBlank(message = "Correo no puede estar vacío")
     @Email(message = "Correo no es válido")
