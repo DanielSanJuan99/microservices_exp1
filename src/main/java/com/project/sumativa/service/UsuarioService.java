@@ -18,6 +18,10 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repo;
     
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.repo = usuarioRepository;
+    }
+
     // Obtener todos los usuarios
     public List<Usuario> getAllUsuarios() {
         log.debug("Servicio: getAllUsuarios()");

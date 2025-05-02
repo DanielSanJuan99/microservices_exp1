@@ -29,13 +29,12 @@ public class Usuario {
     @Size(min = 3, max = 100, message = "Nombre debe tener entre 3 y 50 caracteres")
     private String nombre;
 
-    @NotBlank(message = "Fecha de nacimiento no puede ir vacío")
     @Past(message = "Fecha de nacimiento debe ser una fecha pasada")
     private LocalDate fhaNacimiento;
 
     @NotBlank(message = "Correo no puede estar vacío")
     @Email(message = "Correo no es válido")
-    @Size(min = 15, max = 150, message = "Correo debe tener entre 15 y 150 caracteres")
+    @Size(min = 5, max = 150, message = "Correo debe tener entre 5 y 150 caracteres")
     private String email;
 
     @NotBlank(message = "Rol no puede estar vacío")

@@ -5,5 +5,13 @@
         "titleBar.activeForeground": "#F6FCFE"
     },
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
+    "background.fullscreen": {
+        "images": ["https://media.discordapp.net/attachments/1255270796004429824/1255271453428027503/MV5BMTBmOTAzYzYtYTk4OS00NTJmLTg2OTMtNDM4NmJlZTQxYTFkXkEyXkFqcGdeQXVyODg2Mjc5MjA._V1_.jpg?ex=680bfca4&is=680aab24&hm=120122528a5e793b92beb13a272224a622796a54b5907e1a473f708a7cac4d2a&=&format=webp&width=808&height=461"],
+        "opacity": 0.1,
+        "size": "cover",
+        "position": "center",
+        "interval": 0,
+        "random": false
+    }
 }
