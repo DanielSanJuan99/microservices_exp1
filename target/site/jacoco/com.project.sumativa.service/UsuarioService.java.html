@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsuarioService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sumativa</a> &gt; <a href="index.source.html" class="el_package">com.project.sumativa.service</a> &gt; <span class="el_source">UsuarioService.java</span></div><h1>UsuarioService.java</h1><pre class="source lang-java linenums">package com.project.sumativa.service;
+
+import com.project.sumativa.model.Usuario;
+import com.project.sumativa.repository.UsuarioRepository;
+import com.project.sumativa.exception.UsuarioNotFound;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L14">@Slf4j</span>
+@Service
+public class UsuarioService {
+
+    @Autowired
+    private UsuarioRepository repo;
+    
+<span class="fc" id="L21">    public UsuarioService(UsuarioRepository usuarioRepository) {</span>
+<span class="fc" id="L22">        this.repo = usuarioRepository;</span>
+<span class="fc" id="L23">    }</span>
+
+    // Obtener todos los usuarios
+    public List&lt;Usuario&gt; getAllUsuarios() {
+<span class="nc" id="L27">        log.debug(&quot;Servicio: getAllUsuarios()&quot;);</span>
+<span class="nc" id="L28">        return repo.findAll(Sort.by(&quot;id&quot;)</span>
+<span class="nc" id="L29">            .ascending());</span>
+    }
+
+    // Obtener usuario por ID
+    public Usuario getUsuarioById(Long id) {
+<span class="fc" id="L34">        log.debug(&quot;Servicio: getUsuarioById({})&quot;, id);</span>
+<span class="fc" id="L35">        return repo.findById(id)</span>
+<span class="fc" id="L36">            .orElseThrow(() -&gt; new UsuarioNotFound(id));</span>
+    }
+
+    // Crear usuario
+    public Usuario createUsuario(Usuario usuario) {
+<span class="nc" id="L41">        log.debug(&quot;Servicio: createUsuario({})&quot;, usuario);</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (repo.existsById(usuario.getId())) {</span>
+<span class="nc" id="L44">            log.error(&quot;El usuario con ID {} ya existe&quot;, usuario.getId());</span>
+<span class="nc" id="L45">            throw new IllegalArgumentException(&quot;El ID de esta usuario ya existe&quot; + usuario.getId());</span>
+        }
+
+<span class="nc" id="L48">        return repo.save(usuario);</span>
+    }
+
+    // Actualizar usuario
+    public Usuario updateUsuario(Long id, Usuario usuarioUpdt) {
+<span class="nc" id="L53">        log.debug(&quot;Servicio: updateUsuario({}, {})&quot;, id, usuarioUpdt.getNombre());</span>
+
+<span class="nc" id="L55">        Usuario usuarioExiste = repo.findById(id)</span>
+<span class="nc" id="L56">            .orElseThrow(() -&gt; new UsuarioNotFound(id));</span>
+
+<span class="nc" id="L58">        usuarioExiste.setNombre(usuarioUpdt.getNombre());</span>
+<span class="nc" id="L59">        usuarioExiste.setEmail(usuarioUpdt.getEmail());</span>
+<span class="nc" id="L60">        usuarioExiste.setFhaNacimiento(usuarioUpdt.getFhaNacimiento());</span>
+<span class="nc" id="L61">        usuarioExiste.setRol(usuarioUpdt.getRol());</span>
+
+<span class="nc" id="L63">        usuarioUpdt.setId(id);</span>
+<span class="nc" id="L64">        return repo.save(usuarioUpdt);</span>
+    }
+
+    // Eliminar usuario
+    public void deleteUsuario(Long id) {
+<span class="nc" id="L69">        log.debug(&quot;Servicio: deleteUsuario({})&quot;, id);</span>
+<span class="nc" id="L70">        Usuario usuario = repo.findById(id)</span>
+<span class="nc" id="L71">            .orElseThrow(() -&gt; new UsuarioNotFound(id));</span>
+<span class="nc" id="L72">        repo.delete(usuario);</span>
+<span class="nc" id="L73">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

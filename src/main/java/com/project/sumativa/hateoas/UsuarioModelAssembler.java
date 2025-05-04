@@ -27,13 +27,8 @@ public class UsuarioModelAssembler implements RepresentationModelAssembler<Usuar
                         .getUsuarioById(usuario.getId()))
                         .withSelfRel(),
 
-                // Enlace para crear un nuevo usuario (POST /usuarios)
                 linkTo(methodOn(UsuarioController.class)
-                        .createUsuario(usuario))
-                        .withRel("usuario"), // Link para crear un nuevo usuario
-
-                linkTo(methodOn(UsuarioController.class)
-                        .updateUsuario(usuario.getId(), usuario))
+                        .updateUsuario(usuario.getId(), null))
                         .withRel("update"),
                 
                 linkTo(methodOn(UsuarioController.class)

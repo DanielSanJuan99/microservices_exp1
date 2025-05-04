@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsuarioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sumativa</a> &gt; <a href="index.source.html" class="el_package">com.project.sumativa.controller</a> &gt; <span class="el_source">UsuarioController.java</span></div><h1>UsuarioController.java</h1><pre class="source lang-java linenums">package com.project.sumativa.controller;
+
+import com.project.sumativa.model.Usuario;
+import com.project.sumativa.service.UsuarioService;
+import com.project.sumativa.hateoas.UsuarioModelAssembler;
+import com.project.sumativa.model.ResponseWrapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.CollectionModel;
+import javax.validation.Valid;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+<span class="fc" id="L23">@Slf4j</span>
+@RestController
+@RequestMapping(&quot;/usuarios&quot;)
+public class UsuarioController {
+    
+    private final UsuarioService usuarioService;
+    private final UsuarioModelAssembler assembler;
+
+<span class="fc" id="L31">    public UsuarioController(UsuarioService usuarioService, UsuarioModelAssembler assembler) {</span>
+<span class="fc" id="L32">        this.usuarioService = usuarioService;</span>
+<span class="fc" id="L33">        this.assembler = assembler;</span>
+<span class="fc" id="L34">    }</span>
+
+    // Recupera todos los usuarios
+    @GetMapping
+    public ResponseEntity&lt;?&gt; getAllUsuarios() {
+<span class="nc" id="L39">        log.info(&quot;GET /usuarios - Recuperando todos los usuarios&quot;);</span>
+
+<span class="nc" id="L41">        List&lt;Usuario&gt; usuarios = usuarioService.getAllUsuarios();</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (usuarios.isEmpty()) {</span>
+<span class="nc" id="L44">            log.warn(&quot;No hay usuarios registrados&quot;);</span>
+<span class="nc" id="L45">            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;No hay usuarios registrados.&quot;);</span>
+        }
+
+<span class="nc" id="L48">        List&lt;EntityModel&lt;Usuario&gt;&gt; modelos = usuarios.stream()</span>
+<span class="nc" id="L49">                .map(assembler::toModel)</span>
+<span class="nc" id="L50">                .collect(Collectors.toList());</span>
+
+<span class="nc" id="L52">        return ResponseEntity.ok(</span>
+<span class="nc" id="L53">                CollectionModel.of(modelos,</span>
+<span class="nc" id="L54">                    linkTo(methodOn(UsuarioController.class).getAllUsuarios()).withSelfRel()));</span>
+    }
+
+    // Recupera un usuario por ID
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;EntityModel&lt;Usuario&gt;&gt; getUsuarioById(@PathVariable Long id) {
+<span class="fc" id="L60">        log.info(&quot;GET /usuarios/{} - Recuperando usuario por ID&quot;, id);</span>
+<span class="fc" id="L61">        Usuario usuario = usuarioService.getUsuarioById(id);</span>
+
+<span class="fc" id="L63">        return ResponseEntity.ok(assembler.toModel(usuario));</span>
+    }
+
+    // Crea un nuevo usuario
+    @PostMapping
+    public ResponseEntity&lt;EntityModel&lt;Usuario&gt;&gt; createUsuario(@Valid @RequestBody Usuario usuario) {
+<span class="nc" id="L69">        log.info(&quot;POST /usuarios - Creando nuevo usuario: {}&quot;, usuario);</span>
+<span class="nc" id="L70">        Usuario createdUsuario = usuarioService.createUsuario(usuario);</span>
+<span class="nc" id="L71">        return ResponseEntity</span>
+<span class="nc" id="L72">                .status(HttpStatus.CREATED)</span>
+<span class="nc" id="L73">                .body(assembler.toModel(createdUsuario));</span>
+    }
+
+    // Actualiza un usuario existente
+    @PostMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;EntityModel&lt;Usuario&gt;&gt; updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+<span class="nc" id="L79">        log.info(&quot;POST /usuarios/{} - Actualizando usuario: {}&quot;, id);</span>
+<span class="nc" id="L80">        Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);</span>
+<span class="nc" id="L81">        return ResponseEntity.ok(</span>
+<span class="nc" id="L82">                assembler.toModel(updatedUsuario));</span>
+    }
+
+    // Elimina un usuario por ID
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ResponseWrapper&lt;Void&gt;&gt; deleteUsuario(@PathVariable Long id) {
+<span class="nc" id="L88">        log.warn(&quot;DELETE /usuarios/{} - Eliminando usuario&quot;, id);</span>
+<span class="nc" id="L89">        usuarioService.deleteUsuario(id);</span>
+<span class="nc" id="L90">        return ResponseEntity.ok(</span>
+            new ResponseWrapper&lt;&gt;(
+                &quot;Usuario eliminado&quot;,
+                1,
+                null
+            ));
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

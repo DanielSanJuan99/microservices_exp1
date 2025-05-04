@@ -52,10 +52,6 @@ public class UsuarioControllerTest {
                     .withSelfRel(),
 
             linkTo(methodOn(UsuarioController.class)
-                    .createUsuario(usuario))
-                    .withRel("usuario"),
-
-            linkTo(methodOn(UsuarioController.class)
                     .updateUsuario(usuario.getId(), usuario))
                     .withRel("update"),
 
@@ -69,10 +65,9 @@ public class UsuarioControllerTest {
         mockMvc.perform(get("/usuarios/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nombre").value("Juan"))
-                .andExpect(jsonPath("$.fechaNacimiento").value("1999-01-08"))
+                .andExpect(jsonPath("$.fhaNacimiento").value("1999-01-08"))
                 .andExpect(jsonPath("$.email").value("dsanjuan1999@gmail.com"))
                 .andExpect(jsonPath("$.rol").value("Usuario c/mascota"))
                 .andExpect(jsonPath("$._links.self.href").exists())

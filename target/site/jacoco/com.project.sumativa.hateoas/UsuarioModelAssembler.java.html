@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsuarioModelAssembler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sumativa</a> &gt; <a href="index.source.html" class="el_package">com.project.sumativa.hateoas</a> &gt; <span class="el_source">UsuarioModelAssembler.java</span></div><h1>UsuarioModelAssembler.java</h1><pre class="source lang-java linenums">package com.project.sumativa.hateoas;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import com.project.sumativa.controller.UsuarioController;
+import com.project.sumativa.model.Usuario;
+
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="fc" id="L13">public class UsuarioModelAssembler implements RepresentationModelAssembler&lt;Usuario, EntityModel&lt;Usuario&gt;&gt; {</span>
+
+    @Override
+    public EntityModel&lt;Usuario&gt; toModel(Usuario usuario) {
+<span class="nc" id="L17">        return EntityModel.of(</span>
+                usuario, // Entidad original
+
+                // Enlace para eliminar el usuario (GET /usuarios)
+<span class="nc" id="L21">                linkTo(methodOn(UsuarioController.class)</span>
+<span class="nc" id="L22">                        .getAllUsuarios())</span>
+<span class="nc" id="L23">                        .withRel(&quot;all&quot;),</span>
+
+                // Enlace detalle del usuario (GET /usuarios/{id})
+<span class="nc" id="L26">                linkTo(methodOn(UsuarioController.class)</span>
+<span class="nc" id="L27">                        .getUsuarioById(usuario.getId()))</span>
+<span class="nc" id="L28">                        .withSelfRel(),</span>
+
+<span class="nc" id="L30">                linkTo(methodOn(UsuarioController.class)</span>
+<span class="nc" id="L31">                        .updateUsuario(usuario.getId(), null))</span>
+<span class="nc" id="L32">                        .withRel(&quot;update&quot;),</span>
+                
+<span class="nc" id="L34">                linkTo(methodOn(UsuarioController.class)</span>
+<span class="nc" id="L35">                        .deleteUsuario(usuario.getId()))</span>
+<span class="nc" id="L36">                        .withRel(&quot;delete&quot;)); // Link para actualizar el usuario existente;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
