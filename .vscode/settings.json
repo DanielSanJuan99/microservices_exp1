@@ -13,5 +13,6 @@
         "position": "center",
         "interval": 0,
         "random": false
-    }
+    },
+    "java.compile.nullAnalysis.mode": "disabled"
 }
