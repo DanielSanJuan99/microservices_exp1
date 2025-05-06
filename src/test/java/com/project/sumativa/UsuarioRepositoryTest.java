@@ -20,7 +20,8 @@ public class UsuarioRepositoryTest {
 
     @Test
     public void testFindAndSave() {
-        Usuario usuario = new Usuario(2L, "Henrique", LocalDate.parse("1982-08-29"), "doglover82@gmail.com", "Conductor Pet Friendly");
+        Usuario usuario = new Usuario(2L, "Henrique", 
+        LocalDate.parse("1982-08-29"), "doglover82@gmail.com", "Conductor Pet Friendly");
 
         usuarioRepository.save(usuario);
 
